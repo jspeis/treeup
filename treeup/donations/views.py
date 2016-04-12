@@ -10,12 +10,16 @@ from treeup import stripe_keys
 
 @mod.route("/")
 def home():
+    show_all = request.args.get("all", False)
     charity = 'Ilan Moshe Rasooly Memorial Fund'
-    mission = 'Mission statement here'
-    tagline = 'Help raise funds'
+    mission = 'Mission here'
+    tagline = 'Tagline here'
     goal = 10000
     raised = 1000
-    donations = Donation.query.order_by(Donation.date_created.desc()).limit(10).all()
+    donations = Donation.query.order_by(Donation.date_created.desc())
+    if not show_all:
+        donations = donations.limit(10)
+    donations = donations.all()
     raised = Donation.query.with_entities(func.sum(Donation.amount)).first()
     if raised:
         raised = raised[0]
