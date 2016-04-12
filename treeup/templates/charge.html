@@ -1,0 +1,5 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>Thank you so much for your kind donation of {{ "${:,.2f}".format(amount / 100.0)}}!</h2>
+<a href="/">Home</a>
+{% endblock %}

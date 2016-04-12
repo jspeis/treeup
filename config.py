@@ -25,5 +25,3 @@ CSRF_SESSION_KEY = os.environ.get("TREEUP_SECRET")
 
 # Secret key for signing cookies
 SECRET_KEY = os.environ.get("TREEUP_SECRET")
-
-GOAL_AMOUNT_DOLLARS = 10000

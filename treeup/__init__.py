@@ -3,6 +3,14 @@ from flask import Flask, render_template
 
 # Import SQLAlchemy
 from flask.ext.sqlalchemy import SQLAlchemy
+import stripe
+import os
+stripe_keys = {
+    'secret_key': os.environ.get('STRIPE_SECRET_KEY'),
+    'publishable_key': os.environ.get('STRIPE_PUBLISHABLE_KEY')
+}
+
+stripe.api_key = stripe_keys['secret_key']
 
 # Define the WSGI application object
 app = Flask(__name__)

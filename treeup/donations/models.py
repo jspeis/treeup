@@ -11,7 +11,7 @@ class Base(db.Model):
 class Donation(Base):
     name = db.Column(db.String(128), nullable=True, default="Anonymous")
     email = db.Column(db.String(128),  nullable=True)
-    amount_cents = db.Column(db.Integer, nullable=False) # in cents
+    amount = db.Column(db.Float, nullable=False) # in cents
     message = db.Column(db.String, nullable=True)
 
     def __str__(self):
