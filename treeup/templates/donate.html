@@ -1,8 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-  <title>Stripe Getting Started Form</title>
+{% extends "base.html" %}
+{% block content %}
 
   <!-- The required Stripe lib -->
   <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
@@ -19,7 +16,7 @@
 
       if (response.error) {
         // Show the errors on the form
-        $form.find('.payment-errors').text(response.error.message);
+        $form.find('.bg-danger').text(response.error.message);
         $form.find('button').prop('disabled', false);
       } else {
         // token contains id, last4, and card type
@@ -37,7 +34,10 @@
     jQuery(function($) {
       $('#payment-form').submit(function(e) {
         var $form = $(this);
-
+        // if ($("dAmount").val().length == 0) {
+        //   alert("Please enter a donation amount");
+        //   return false;
+        // }
         // Disable the submit button to prevent repeated clicks
         $form.find('button').prop('disabled', true);
 
@@ -53,7 +53,7 @@
   <h1>Donation</h1>
 
   <form action="/charge" method="POST" id="payment-form">
-    <span class="payment-errors"></span>
+    <p><span class="bg-danger"></span></p>
     <div class="form-row">
       <label>
         <span>Donation Amount</span>
@@ -62,7 +62,7 @@
     </div>
     <div class="form-row">
       <label>
-        <span>Acknowledge Name</span>
+        <span>Name to Acknowledge (optional)</span>
         <input type="text" size="40" name="donorName" placeholder="Your Name (or leave blank for Anonymous)"/>
       </label>
     </div>
@@ -90,12 +90,12 @@
     </div>
     <div class="form-row">
       <label>
-        <span>Message</span>
+        <span>Public Message for Website (optional)</span>
 ​         <br/>
         <textarea id="message" rows="5" cols="60" form="payment-form"></textarea>
       </label>
     </div>
     <button type="submit">Submit Payment</button>
   </form>
-</body>
-</html>
+<br/>
+{% endblock %}

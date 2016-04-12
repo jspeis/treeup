@@ -8,7 +8,6 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="../../favicon.ico">
 
     <title>{{ charity }}</title>
 
@@ -29,7 +28,21 @@
   <body>
 
     <div class="container">
-      {% block content %}{% endblock %}
+      <div class="header clearfix">
+        <nav>
+          <ul class="nav nav-pills pull-right">
+          </ul>
+        </nav>
+        <h3 class="text-muted">
+          {% if logo %}
+            <a href="/"><img src="{{logo}}"/></a>
+          {% endif %}
+          {{ charity }}</h3>
+      </div>
+
+      <div class="main-part">
+        {% block content %}{% endblock %}
+      </div>
 
       <footer class="footer">
         <p>2016 {{ charity }}</p>

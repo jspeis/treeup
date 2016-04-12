@@ -3,7 +3,7 @@ from treeup.donations.models import Donation
 import stripe
 from treeup import db
 from sqlalchemy import func
-from config import CHARITY, MISSION, TAGLINE
+from config import CHARITY, MISSION, TAGLINE, LOGO_URL
 
 mod = Blueprint("general", __name__)
 
@@ -24,12 +24,13 @@ def home():
         raised = raised / 100.0
     else:
         raised = 0
-    return render_template("home.html", charity=CHARITY, mission=MISSION, goal=goal,
+    return render_template("home.html", charity=CHARITY, mission=MISSION,
+                            logo=LOGO_URL, goal=goal,
                             raised=raised, tagline=TAGLINE, donations=donations)
 
 @mod.route("/donate/")
 def donate():
-    return render_template("donate.html", key=stripe_keys['publishable_key'])
+    return render_template("donate.html", key=stripe_keys['publishable_key'], charity=CHARITY, logo=LOGO_URL)
 
 
 @mod.route('/charge', methods=['POST'])
@@ -39,7 +40,6 @@ def charge():
     if amount.startswith("$"):
         amount = amount[1:]
     amount = int(float(amount) * 100)
-    print request.form
     customer = stripe.Customer.create(
         email='test@aol.com',
         card=request.form['stripeToken']
@@ -53,6 +53,8 @@ def charge():
     )
     d = Donation()
     d.name = request.form.get("donorName", "Anonymous")
+    if not d.name:
+        d.name = "Anonymous"
     d.email = customer.email
     d.amount = amount
     d.message = request.form.get("message", "")
@@ -60,4 +62,4 @@ def charge():
     db.session.add(d)
     db.session.commit()
     # return redirect("/thankyou")
-    return render_template('charge.html', amount=amount)
+    return render_template('charge.html', amount=amount, charity=CHARITY, logo=LOGO_URL)
