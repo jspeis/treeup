@@ -3,6 +3,7 @@ from treeup.donations.models import Donation
 import stripe
 from treeup import db
 from sqlalchemy import func
+from config import CHARITY, MISSION, TAGLINE
 
 mod = Blueprint("general", __name__)
 
@@ -11,9 +12,6 @@ from treeup import stripe_keys
 @mod.route("/")
 def home():
     show_all = request.args.get("all", False)
-    charity = 'Ilan Moshe Rasooly Memorial Fund'
-    mission = 'Mission here'
-    tagline = 'Tagline here'
     goal = 10000
     raised = 1000
     donations = Donation.query.order_by(Donation.date_created.desc())
@@ -26,8 +24,8 @@ def home():
         raised = raised / 100.0
     else:
         raised = 0
-    return render_template("home.html", charity=charity, mission=mission, goal=goal,
-                            raised=raised, tagline=tagline, donations=donations)
+    return render_template("home.html", charity=CHARITY, mission=MISSION, goal=goal,
+                            raised=raised, tagline=TAGLINE, donations=donations)
 
 @mod.route("/donate/")
 def donate():

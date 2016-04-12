@@ -25,3 +25,8 @@ CSRF_SESSION_KEY = os.environ.get("TREEUP_SECRET")
 
 # Secret key for signing cookies
 SECRET_KEY = os.environ.get("TREEUP_SECRET")
+
+LOGO_URL = os.environ.get("TREEUP_LOGO_URL", None)
+MISSION = os.environ.get("TREEUP_MISSION", "Mission goes here")
+TAGLINE = os.environ.get("TREEUP_TAGLINE", "Tagline goes here")
+CHARITY = os.environ.get("TREEUP_CHARITY", "Charity Name")
