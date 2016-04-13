@@ -19,7 +19,7 @@ def home():
         donations = donations.limit(10)
     donations = donations.all()
     raised = Donation.query.with_entities(func.sum(Donation.amount)).first()
-    if raised:
+    if raised and raised[0]:
         raised = raised[0]
         raised = raised / 100.0
     else:
