@@ -31,4 +31,7 @@ app.register_blueprint(donation_mod)
 
 # Build the database:
 # This will create the database file using SQLAlchemy
-db.create_all()
+try:
+    db.create_all()
+except OperationalError:
+    pass
