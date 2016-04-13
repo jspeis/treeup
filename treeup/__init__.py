@@ -1,10 +1,12 @@
 # Import flask and template operators
 from flask import Flask, render_template
-
+from config import SQLALCHEMY_DATABASE_URI
 # Import SQLAlchemy
 from flask.ext.sqlalchemy import SQLAlchemy
 import stripe
 import os
+from sqlalchemy_utils import database_exists
+
 stripe_keys = {
     'secret_key': os.environ.get('STRIPE_SECRET_KEY'),
     'publishable_key': os.environ.get('STRIPE_PUBLISHABLE_KEY')
@@ -31,7 +33,5 @@ app.register_blueprint(donation_mod)
 
 # Build the database:
 # This will create the database file using SQLAlchemy
-try:
+if not database_exists(SQLALCHEMY_DATABASE_URI):
     db.create_all()
-except OperationalError:
-    pass
