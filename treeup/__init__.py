@@ -33,5 +33,7 @@ app.register_blueprint(donation_mod)
 
 # Build the database:
 # This will create the database file using SQLAlchemy
-if not database_exists(SQLALCHEMY_DATABASE_URI):
+try:
     db.create_all()
+except Exception, e:
+    print "skip creation", e
