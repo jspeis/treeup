@@ -39,7 +39,10 @@ def charge():
     amount = request.form['dAmount']
     if amount.startswith("$"):
         amount = amount[1:]
-    amount = int(float(amount) * 100)
+    try:
+        amount = int(float(amount) * 100)
+    except:
+        return render_template("error.html")
     customer = stripe.Customer.create(
         email='test@aol.com',
         card=request.form['stripeToken']
